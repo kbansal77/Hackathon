@@ -1,12 +1,13 @@
-import './App.css';
-import Navbar from './components/navbar/navbar'
+import "./App.css";
+import CreateMail from "./pages/createMail/createMail";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <CreateMail />
     </div>
   );
 }
+
 
 export default App;
