@@ -1,6 +1,8 @@
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LogIn from "./components/LogIn";
+import "./App.css";
+import CreateMail from "./pages/createMail/createMail";
 
 
 function App() {
@@ -15,10 +17,16 @@ function App() {
         </Router>
       <div className="App">
       <h1> hello</h1>
-    </div>
+      </div>
+
+
+
+      <CreateMail />
+    
     </AuthProvider>
     
   );
 }
+
 
 export default App;
