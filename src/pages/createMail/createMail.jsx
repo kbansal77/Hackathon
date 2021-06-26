@@ -96,6 +96,12 @@ function CreateMail() {
   const [dateSelected, setDateSelected] = React.useState("");
   const [monthSelected, setMonthSelected] = React.useState("");
   const [timeSelected, setTimeSelected] = React.useState("");
+  const toRef = React.useRef("");
+  const ccRef = React.useRef("");
+  const bccRef = React.useRef("");
+  const subRef = React.useRef("");
+  const bodyRef = React.useRef("");
+
 
   const selectday = (event) => {
     // event.currentTarget.classList.add('selected');
@@ -135,15 +141,26 @@ function CreateMail() {
   function openModal() {
     setIsOpen(true);
   }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
   function closeModal() {
     setIsOpen(false);
   }
+  
+  const addMail=()=>{
+    const data={
+    to: toRef.current.value.split(','),
+    cc: ccRef.current.value.split(','),
+    bcc: bccRef.current.value.split(','),
+    subject: subRef.current.value,
+    body: bodyRef.current.value,
+    day: daySelected,
+    date: daySelected,
+    time: timeSelected,
+    month: monthSelected
+  }
+      console.log(data)
+  }
+   
+
   // var M
   // document.addEventListener('DOMContentLoaded', function() {
   //     var elems = document.querySelectorAll('.chips');
@@ -160,7 +177,7 @@ function CreateMail() {
                 <label>To:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input placeholder="To" style={{ width: "90%" }} />
+                <Input inputRef={toRef} placeholder="To" style={{ width: "90%" }} />
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}></Grid>
             </Grid>
@@ -169,7 +186,15 @@ function CreateMail() {
                 <label>CC:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input placeholder="CC" style={{ width: "90%" }} />
+                <Input inputRef={ccRef} placeholder="CC" style={{ width: "90%" }} />
+              </Grid>
+            </Grid>
+            <Grid container style={{ paddingBottom: "1rem" }}>
+              <Grid item xs={1}>
+                <label>BCC:</label>
+              </Grid>
+              <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
+                <Input inputRef={bccRef} placeholder="BCC" style={{ width: "90%" }} />
               </Grid>
             </Grid>
             <Grid container style={{ paddingBottom: "1rem" }}>
@@ -177,7 +202,7 @@ function CreateMail() {
                 <label>Subject:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input placeholder="Subject" style={{ width: "90%" }} />
+                <Input inputRef={subRef} placeholder="Subject" style={{ width: "90%" }} />
               </Grid>
             </Grid>
             <Grid container style={{ paddingBottom: "1rem" }}>
@@ -188,6 +213,7 @@ function CreateMail() {
                 <Input
                   placeholder="Body"
                   style={{ width: "90%" }}
+                  inputRef={bodyRef}
                   multiline
                   rows={6}
                 />
@@ -214,6 +240,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       color="primary"
+                      onClick={addMail}
                     >
                       Schedule Mail
                     </Button>
@@ -244,6 +271,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       color="primary"
+                      onClick={addMail}
                     >
                       Schedule Mail
                     </Button>
@@ -274,6 +302,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       color="primary"
+                      onClick={addMail}
                     >
                       Schedule Mail
                     </Button>
@@ -307,6 +336,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       color="primary"
+                      onClick={addMail}
                     >
                       Schedule Mail
                     </Button>
