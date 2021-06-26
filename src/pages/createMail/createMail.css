@@ -65,9 +65,9 @@
 
 .mymodal {
   border-radius: 30px;
-  border: 1px solid #00b657;
+  border: 1px solid #3EBDF1;
   width: 40%;
-  height: 40%;
+  height: 41%;
   top: 50%;
   left: 50%;
   right: auto;
@@ -86,7 +86,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #bdbdbd;
+  background-color:#eee2e28a ;
 }
 
 .dayclass {
@@ -107,6 +107,12 @@
   background: transparent;
   
 }
+ #cntbtn{
+   background-color:#3ebdf1 ;
+   color: cornsilk;
+   margin-top: .6rem;
+   
+ }
 
 .btn-success:not(:disabled):not(.disabled).active,
 .btn-success:not(:disabled):not(.disabled):active,

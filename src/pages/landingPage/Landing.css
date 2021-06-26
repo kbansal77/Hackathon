@@ -22,11 +22,20 @@
     margin-top: 3rem;
     background-color: #3EBDF1;
     color:cornsilk;
-    height: 3.5rem;
+    height: 4rem;
+    
     font-size: 1.5rem;
     left: 30%;
 }
 
+#contbtn{
+  margin-top: 3rem;
+    color:#3EBDF1;
+    border: 1px solid #3EBDF1;
+    height: 3.5rem;
+    font-size: 1.5rem;
+    left: 30%;
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap%27');
 
 .myLmodal {

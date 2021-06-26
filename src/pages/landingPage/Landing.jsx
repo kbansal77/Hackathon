@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { useAuth } from '../../contexts/AuthContext';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import IconButton from '@material-ui/core/IconButton';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -65,54 +66,54 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         flexGrow: 1,
-        marginTop: "1rem",        
-        backgroundColor: "white",        
+        marginTop: "1rem",
+        backgroundColor: "white",
         boxShadow: 'none',
-    
+
     },
 }));
 
-const Landing = () => {    
+const Landing = () => {
     const history = useHistory()
     const [pass, setPass] = useState("")
     const [email, setEmail] = useState("")
-    const { Gsignup,emailLogin,emailSignup, } = useAuth()
+    const { Gsignup, emailLogin, emailSignup, currentUser } = useAuth()
     const [value, setValue] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
 
-  function openModal() {
-    setIsOpen(true);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-    function clickhandler(e) {
-        e.preventDefault()
-        Gsignup()
-        history.push('/home');
+    function openModal() {
+        setIsOpen(true);
     }
-     function Echange(e){
-        setEmail(e.target.value)
-     }
-     function Pchange(e){
-        setPass(e.target.value)
-     }
-    function loginHandle(e){
-            e.preventDefault()
-            emailLogin(email,pass)
-                setEmail("")
-                setPass("")    
-                history.push('/home');                 
-        }
+    function closeModal() {
+        setIsOpen(false);
+    }
 
-    function signupHandle(e){
+    async function clickhandler(e) {
         e.preventDefault()
-        emailSignup(email,pass)          
-        
+        await Gsignup()
+        history.push('/dashboard');
+    }
+    function Echange(e) {
+        setEmail(e.target.value)
+    }
+    function Pchange(e) {
+        setPass(e.target.value)
+    }
+    async function loginHandle(e) {
+        e.preventDefault()
+        var blah = await emailLogin(email, pass)
         setEmail("")
         setPass("")
-        history.push('/home');
+        history.push('/dashboard');
+    }
+
+    async function signupHandle(e) {
+        e.preventDefault()
+        await emailSignup(email, pass)
+
+        setEmail("")
+        setPass("")
+        history.push('/dashboard');
     }
     const classes = useStyles();
     const handleChange = (event, newValue) => {
@@ -128,9 +129,18 @@ const Landing = () => {
                         <div id="textdiv">
                             <p id="title1">Lorem ipsumae ullam reprehenderit s culpa ipsa natus!</p>
                             <p id="title2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique ut odit delectus dignissimos </p>
-                            <Button variant="contained" id="loginbtn" onClick={openModal}>
-                                Login /Signup
-                            </Button>
+
+                            {currentUser ? (
+                                
+                                    <Button variant="outlined" id="contbtn" endIcon={<ArrowForwardIosIcon />} href="/dashboard">
+                                        Continue
+                                    </Button>                                
+                            ) : (                                
+                                    <Button variant="contained" id="loginbtn" onClick={openModal}>
+                                        Login /Signup
+                                    </Button>                                
+                            )}
+
                         </div>
 
                     </Grid>
@@ -138,11 +148,11 @@ const Landing = () => {
                         <img src={mail} style={{ height: "25rem" }} alt="" />
                     </Grid>
                 </Grid>
-            
+
             </Container>
 
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="My dialog" className="myLmodal" overlayClassName="myLoverlay"   >
-            {/* () => history.push("/home") */}
+                {/* () => history.push("/home") */}
                 <Container fixed>
 
                     {/* HEADER */}
@@ -154,15 +164,15 @@ const Landing = () => {
                                 </IconButton>
                             </p>
                         </Grid>
-                        <Grid item lg={10} sm={6}>                            
+                        <Grid item lg={10} sm={6}>
                             <AppBar position="static" className={classes.root}>
-                                <Tabs value={value} 
-                                
-                                onChange={handleChange} 
-                                aria-label="simple tabs example" 
-                                indicatorColor="primary"
-                                textColor="primary"
-                                centered>
+                                <Tabs value={value}
+
+                                    onChange={handleChange}
+                                    aria-label="simple tabs example"
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    centered>
                                     <Tab label="Login" {...a11yProps(0)} />
                                     <Tab label="Signup" {...a11yProps(1)} />
 
@@ -183,7 +193,7 @@ const Landing = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
-                                value = {email}
+                                value={email}
                                 autoFocus
                                 onChange={Echange}
                             />
@@ -197,8 +207,8 @@ const Landing = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                value = {pass}
-                                onChange = {Pchange}
+                                value={pass}
+                                onChange={Pchange}
                             />
 
                             <Button
@@ -219,18 +229,18 @@ const Landing = () => {
                                 color="primary"
                                 className={classes.submit}
                                 onClick={clickhandler}
-                                style={{height:"3rem"}}
+                                style={{ height: "3rem" }}
                             >
-                                
-                                <i class="fab fa-google" style={{fontSize:"1.5rem", marginRight: ".5rem"}} ></i>
+
+                                <i class="fab fa-google" style={{ fontSize: "1.5rem", marginRight: ".5rem" }} ></i>
                                 Continue with google
                             </Button>
-                            
+
 
                         </form>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                    <form className={classes.form} noValidate>
+                        <form className={classes.form} noValidate>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -240,7 +250,7 @@ const Landing = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
-                                value = {email}
+                                value={email}
                                 autoFocus
                                 onChange={Echange}
                             />
@@ -254,8 +264,8 @@ const Landing = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                value = {pass}
-                                onChange = {Pchange}
+                                value={pass}
+                                onChange={Pchange}
                             />
 
                             <Button
@@ -276,9 +286,9 @@ const Landing = () => {
                                 color="primary"
                                 className={classes.submit}
                                 onClick={clickhandler}
-                                style={{height:"3rem"}}
+                                style={{ height: "3rem" }}
                             >
-                                <i class="fab fa-google" style={{fontSize:"1.5rem", marginRight: ".5rem"}} ></i>
+                                <i class="fab fa-google" style={{ fontSize: "1.5rem", marginRight: ".5rem" }} ></i>
                                 Continue with google
                             </Button>
 

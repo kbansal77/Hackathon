@@ -1,0 +1,18 @@
+#editbtn{
+    margin-top: -.5rem;
+    justify-content: right;
+    border: 1.5px solid #3EBDF1;
+    color:#3EBDF1;
+    font-weight: 550;
+    margin-bottom: .5rem;
+}
+#delbtn{
+    margin-top: -.5rem;
+    justify-content: right;
+    
+    margin-left: 1rem;
+    margin-bottom: .5rem;
+}
+.collp{
+    margin-top: 2rem;
+}

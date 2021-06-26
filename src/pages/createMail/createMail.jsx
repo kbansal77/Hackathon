@@ -153,7 +153,7 @@ function CreateMail() {
     <div>
       <Navbar />
       <Container style={{ padding: "2rem 0" }}>
-        <Card style={{ paddingT: "2rem 0" }}>
+        <Card style={{ padding: "2rem " }}>
           <Container style={{ textAlign: "left", marginLeft: "3rem" }}>
             <Grid container style={{ paddingBottom: "1rem" }}>
               <Grid item xs={1}>
@@ -581,7 +581,7 @@ function CreateMail() {
           {type ? (
             <Grid container>
               <Grid item xs={12}>
-                <Button variant="contained">Continue</Button>
+                <Button variant="contained" id="cntbtn">Continue</Button>
               </Grid>
             </Grid>
           ) : (
