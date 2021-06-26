@@ -5,6 +5,8 @@ import "./App.css";
 import CreateMail from "./pages/createMail/createMail";
 import home from "./pages/homePage/home";
 import Landing from "./pages/landingPage/Landing";
+import Dashboard from "./pages/dashboard/dashboard";
+
 
 
 
@@ -18,11 +20,11 @@ function App() {
             <Route path="/login" component={LogIn} />
             <Route path="/createMail" component={CreateMail}/>
             <Route path="/home" component={home}/>
-            
+            <Route path="/dashboard" component= {Dashboard} />
           </Switch>
         </Router>     
+        
     </AuthProvider>
-    
   );
 }
 
