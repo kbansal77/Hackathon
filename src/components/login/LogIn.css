@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap%27');
+
+.myLmodal {
+    border-radius: 30px; 
+    border: 1px solid #3EBDF1; 
+    width: 30%;
+    height: 65%;
+    top: 50%;
+    left: 50%; 
+    right: auto;
+    bottom: auto;  
+    transform: translate(-50%, -50%) ;
+    background: #fff;
+    overflow: auto;
+    outline: none;
+    
+    position: relative;
+  }
+  
+  .myLoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:#bdbdbd ;
+  }
+
+
+  .or{
+    text-align: center;
+    font-size: 1.2rem;
+    color: #bdbdbd;
+    margin: 0;
+  }
+
+  /* .MuiTab-textColorPrimary.Mui-selected {
+    color: #3EBDF1 !important;
+} */
+ 
+  
+  @media (max-width: 1024px){
+    .mymodal{
+      width: 70%;
+      height: 40%;
+    }
+  }
+
+  @media(max-width:400px){
+    .mymodal{
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+    }  
+  }
+
+  

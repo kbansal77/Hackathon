@@ -1,7 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap%27');
-
+/* #nav{
+    border: 1px solid black;
+} */
 #navhead{
     font-size: 3rem;
     font-weight: 700;
     color:#3EBDF1
+}
+
+#composebtn{
+    margin-top: 1rem;
+    background-color: #3EBDF1;
+    color:cornsilk;
+}
+
+#logoutbtn{
+    margin-top: 1rem;
+    justify-content: right;
+    border: 1.5px solid #3EBDF1;
+    color:#3EBDF1;
+    font-weight: 550;
 }

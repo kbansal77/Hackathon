@@ -70,28 +70,37 @@ export function AuthProvider({ children }) {
     //    }
      })
   }
+  function emailSignup(email,password){
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in 
+        var user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ..
+      });
+  }
+
+  function emailLogin(email,password){
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+      });
+  }
 
   function logout(){
     return auth.signOut()
   }
 
-//   function  pSignUp(id, code){
-//     var credential = firebase.auth.PhoneAuthProvider.credential(id, code);
-//     firebase.auth().signInWithCredential(credential).then(function (result) {
-//       // User signed in successfully.
-//       var user = result.user;
-//       console.log(user);
-      
-  
-//       alert('Successfully logged in')
-//       // ...
-//       }).catch(function (error) {
-//       // User couldn't sign in (bad verification code?)
-//       // ...
-//       console.log(error.message);
-//       });
-//   }
- 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user)
@@ -109,6 +118,8 @@ export function AuthProvider({ children }) {
     tokenId,
     userId,
     Gsignup,
+    emailLogin,
+    emailSignup,
     logout
   }
 

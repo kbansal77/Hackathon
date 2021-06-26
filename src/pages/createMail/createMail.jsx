@@ -47,7 +47,7 @@ function CreateMail() {
   //   })
   return (
     <div>
-      <Navbar />
+      <Navbar page="createMail"/>
       <Container style={{ paddingTop: "2rem" }}>
         <Card style={{ paddingTop: "2rem" }}>
           <Container style={{ textAlign: "left", marginLeft: "3rem" }}>

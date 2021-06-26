@@ -4,7 +4,7 @@ import './LogIn.css'
 import { useState, useRef, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -16,9 +16,10 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
-import search from '../images/search.png'
 import Box from '@material-ui/core/Box';
+
 Modal.setAppElement('#root')
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -66,46 +67,47 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         marginTop: "1rem",        
         backgroundColor: "white",        
-        boxShadow: 'none'
+        boxShadow: 'none',
+    
     },
 }));
+
+
 
 const LogIn = () => {
     const [resultId, setResultId] = useState("")
     const history = useHistory()
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const { Gsignup } = useAuth()
+    const [pass, setPass] = useState("")
+    const [email, setEmail] = useState("")
+    const { Gsignup,emailLogin,emailSignup, } = useAuth()
     const [value, setValue] = useState(0);
 
     function clickhandler(e) {
         e.preventDefault()
-
         Gsignup()
     }
+     function Echange(e){
+        setEmail(e.target.value)
+     }
+     function Pchange(e){
+        setPass(e.target.value)
+     }
+    function loginHandle(e){
+            e.preventDefault()
+            emailLogin(email,pass)
+                setEmail("")
+                setPass("")                     
+        }
 
+    function signupHandle(e){
+        e.preventDefault()
+        emailSignup(email,pass)          
+        console.log(email)
+        console.log(pass)
+        setEmail("")
+        setPass("")
+    }
     const classes = useStyles();
-
-    // const isFirstRender = useRef(true)
-    // useEffect(() => {
-    //     if (!isFirstRender.current) {
-    //         history.push({
-    //             pathname: '/otp',
-    //             state: {
-    //                 id: resultId,
-    //                 num: phoneRef.current.value
-    //             }
-    //         });
-    //     }
-    // }, [resultId]) // eslint-disable-line react-hooks/exhaustive-deps
-
-    // useEffect(() => {
-    //     isFirstRender.current = false;
-    // }, []);
-
-
-    
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -113,7 +115,7 @@ const LogIn = () => {
 
     return (
         <div>
-            <Modal isOpen={true} onRequestClose={() => history.push("/")} contentLabel="My dialog" className="mymodal" overlayClassName="myoverlay"   >
+            <Modal isOpen={true} onRequestClose={() => history.push("/home")} contentLabel="My dialog" className="myLmodal" overlayClassName="myLoverlay"   >
 
                 <Container fixed>
 
@@ -129,6 +131,7 @@ const LogIn = () => {
                         <Grid item lg={10} sm={6}>                            
                             <AppBar position="static" className={classes.root}>
                                 <Tabs value={value} 
+                                
                                 onChange={handleChange} 
                                 aria-label="simple tabs example" 
                                 indicatorColor="primary"
@@ -154,7 +157,9 @@ const LogIn = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                value = {email}
                                 autoFocus
+                                onChange={Echange}
                             />
                             <TextField
                                 variant="outlined"
@@ -166,6 +171,8 @@ const LogIn = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value = {pass}
+                                onChange = {Pchange}
                             />
 
                             <Button
@@ -174,6 +181,7 @@ const LogIn = () => {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={loginHandle}
                             >
                                 LogIn
                             </Button>
@@ -184,15 +192,71 @@ const LogIn = () => {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={clickhandler}
+                                style={{height:"3rem"}}
                             >
-                                <img src={search} style={{ height: '2rem', margin: '.2rem' }} />
+                                
+                                <i class="fab fa-google" style={{fontSize:"1.5rem", marginRight: ".5rem"}} ></i>
                                 Continue with google
                             </Button>
+                            
 
                         </form>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        Item Two
+                    <form className={classes.form} noValidate>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                value = {email}
+                                autoFocus
+                                onChange={Echange}
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value = {pass}
+                                onChange = {Pchange}
+                            />
+
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={signupHandle}
+                            >
+                                Signup
+                            </Button>
+                            <p className="or">-OR-</p>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="outlined"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={clickhandler}
+                                style={{height:"3rem"}}
+                            >
+                                <i class="fab fa-google" style={{fontSize:"1.5rem", marginRight: ".5rem"}} ></i>
+                                Continue with google
+                            </Button>
+
+                        </form>
                     </TabPanel>
 
                 </Container>

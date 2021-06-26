@@ -1,6 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap%27');
 
-.mymodal {
+#title1 {
+    color: black;
+    font-size: 1.5rem;
+    
+}
+
+#title2 {
+    color: black;   
+    font-size: 1.5rem;
+}
+
+.cont{
+    margin-top: 5rem;
+}
+#textdiv{
+    margin-top: 5rem;
+}
+
+#loginbtn{
+    margin-top: 3rem;
+    background-color: #3EBDF1;
+    color:cornsilk;
+    height: 3.5rem;
+    font-size: 1.5rem;
+    left: 30%;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap%27');
+
+.myLmodal {
     border-radius: 30px; 
     border: 1px solid #3EBDF1; 
     width: 30%;
@@ -17,13 +46,14 @@
     position: relative;
   }
   
-  .myoverlay {
+  .myLoverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color:#bdbdbd ;
+    background-color:#eee2e28a ;
+    
   }
 
 
@@ -33,6 +63,11 @@
     color: #bdbdbd;
     margin: 0;
   }
+
+  /* .MuiTab-textColorPrimary.Mui-selected {
+    color: #3EBDF1 !important;
+} */
+ 
   
   @media (max-width: 1024px){
     .mymodal{
@@ -50,3 +85,4 @@
   }
 
   
+
