@@ -152,8 +152,8 @@ function CreateMail() {
   return (
     <div>
       <Navbar />
-      <Container style={{ paddingTop: "2rem" }}>
-        <Card style={{ paddingTop: "2rem" }}>
+      <Container style={{ padding: "2rem 0" }}>
+        <Card style={{ paddingT: "2rem 0" }}>
           <Container style={{ textAlign: "left", marginLeft: "3rem" }}>
             <Grid container style={{ paddingBottom: "1rem" }}>
               <Grid item xs={1}>
