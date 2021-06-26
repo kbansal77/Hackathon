@@ -18,8 +18,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { useAuth } from "../../contexts/AuthContext";
 
 import "./dashboard.css";
+import { getDefaultNormalizer } from "@testing-library/react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -94,16 +96,18 @@ function Dashboard() {
   const [selectedId, setSelectedId] = React.useState("")
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
+  const {currentUser } = useAuth();
   const [mails, setMails] = useState("")
 
 
 
 
   useEffect(() => {
-    fetch('https://004bfa520cbc.ngrok.io/mails', {
+    fetch('https://6a9d0e005d61.ngrok.io/mails', {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
+        'sender': currentUser.email
       }
     })
       .then(response => response.json()).then(data => {
@@ -115,7 +119,22 @@ function Dashboard() {
       .catch(err => { console.log(err) })
   }, [])
 
+ const reload =()=>{
+  fetch('https://6a9d0e005d61.ngrok.io/mails', {
+    method: 'GET', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+      'sender': currentUser.email
+    }
+  })
+    .then(response => response.json()).then(data => {
+      console.log(data);
 
+      setMails(data);
+      setIsLoading(false)
+    })
+    .catch(err => { console.log(err) })
+ }
   const handleClick = (id) => {
     if (selectedId === id) {
       setSelectedId("")
@@ -128,9 +147,7 @@ function Dashboard() {
 
   const classes = useStyles();
   const editMail = (id) => {
-
-
-    fetch(`https://004bfa520cbc.ngrok.io/mails/${id}`, {
+    fetch(`https://6a9d0e005d61.ngrok.io/mails/${id}`, {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -144,14 +161,24 @@ function Dashboard() {
           pathname: '/editMail',
           state: data
         });
-
-
+      })
+      .catch(err => { console.log(err) })
+  }
+const delMail =(id) =>{
+  fetch(`https://6a9d0e005d61.ngrok.io/mails/${id}`, {
+      method: 'DELETE', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json()).then(data => {
+        console.log(data);
+        alert(data.message)
+        reload()
       })
       .catch(err => { console.log(err) })
 
-
-  }
-
+}
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -236,7 +263,20 @@ function Dashboard() {
                             {mail.cc.map((rec) => (
                               ` ${rec},`
                             ))}
-                            {/* <Typography
+                            
+                          </Grid>
+                          <Grid item lg={4} xs={6}>
+                            <Button variant="outlined" id="editbtn" onClick={() => { editMail(mail._id) }} endIcon={<EditIcon />}>
+                              Edit Mail
+                            </Button>
+                            <Button variant="outlined" id="delbtn" color="secondary" endIcon={<DeleteIcon />} onClick={()=>{delMail(mail._id)}}>
+                              Delete Mail
+                            </Button>
+
+
+                          </Grid>
+                        </Grid>
+                        <Typography
                               component="span"
                               color="textPrimary"
                             >
@@ -244,19 +284,7 @@ function Dashboard() {
                             </Typography>
                             {mail.bcc.map((rec) => (
                               ` ${rec},`
-                            ))} */}
-                          </Grid>
-                          <Grid item lg={4} xs={6}>
-                            <Button variant="outlined" id="editbtn" onClick={() => { editMail(mail._id) }} endIcon={<EditIcon />}>
-                              Edit Mail
-                            </Button>
-                            <Button variant="outlined" id="delbtn" color="secondary" endIcon={<DeleteIcon />}>
-                              Delete Mail
-                            </Button>
-
-
-                          </Grid>
-                        </Grid>
+                            ))}
 
                         <Card style={{ padding: "2rem " }}>
                           {mail.body}

@@ -12,62 +12,17 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
-  const [loading, setLoading] = useState(true)
-  const [tokenId, setTokenId] = useState("")
-  const [userId, setUserId] = useState("")  
-  // const [userDetails, setUserDetails] = useState({
-  //   uid: "",
-  //   token: "",
-  //   phoneNum:"",
-  //   userName:""
-  // })
+  const [loading, setLoading] = useState(true)  
+    
+  
 
   function Gsignup() {
     var provider = new firebase.auth.GoogleAuthProvider();
     // console.log(provider)
      return  firebase.auth().signInWithPopup(provider).then((result)=>{
       const User = result.user
-      User.getIdToken(true).then((token)=>{
           
-          // setUserDetails({
-          //   uid: User.uid,
-          //   token: token,
-          //   phoneNum:"",
-          //   userName:User.displayName
-          // }
-          setTokenId(token)
-          setUserId(User.uid)
-
-
-          
-        })
-    //   if(result.additionalUserInfo.isNewUser){
-        
-        
-    //       // console.log(id_token)
-    //       axios({
-    //         url: `https://healings-backend.herokuapp.com/user/${User.uid}/add`,
-    //         method:'post',
-    //         data:{
-    //          name: User.displayName,
-    //          email: User.email,
-    //          avatar: User.photoURL,
-    //          joined: new Date()
-    //         },
-    //         headers: {
-    //          "Content-Type": "application/json",
-    //          "uid": User.uid,
-    //          "token": tokenId
-    //        }
-    //       }).then((res)=>{
-    //         console.log(res.headers)
-    //       })
-        
-    //     // console.log(User.uid,User.displayName,User.email,User.photoURL,User.refreshToken)
-    //     .catch((error)=>{
-    //        console.log(error)
-    //      })
-    //    }
+    
      })
   }
   function emailSignup(email,password){
@@ -115,8 +70,6 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
-    tokenId,
-    userId,
     Gsignup,
     emailLogin,
     emailSignup,
