@@ -9,6 +9,8 @@ import Input from "@material-ui/core/Input";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
+import Chip from "@material-ui/core/Chip";
+import TagFacesIcon from "@material-ui/icons/TagFaces";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Navbar from "../../components/navbar/navbar";
@@ -66,6 +68,16 @@ const months = [
 ];
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    listStyle: "none",
+    padding: theme.spacing(0.5),
+    margin: 0,
+  },
+  chip: {
+    margin: theme.spacing(0.5),
+  },
   container: {
     display: "flex",
     flexWrap: "wrap",
@@ -96,12 +108,57 @@ function CreateMail() {
   const [dateSelected, setDateSelected] = React.useState("");
   const [monthSelected, setMonthSelected] = React.useState("");
   const [timeSelected, setTimeSelected] = React.useState("");
+  const [tovalue, setToValue] = React.useState("");
+  const [tochip, setToChip] = React.useState([]);
+  const [ccvalue, setCcValue] = React.useState("");
+  const [ccchip, setCcChip] = React.useState([]);
+  const [bccvalue, setBccValue] = React.useState("");
+  const [bccchip, setBccChip] = React.useState([]);
   const toRef = React.useRef("");
   const ccRef = React.useRef("");
   const bccRef = React.useRef("");
   const subRef = React.useRef("");
   const bodyRef = React.useRef("");
 
+  function isValid(email) {
+    let error = null;
+
+    if (isInList(email)) {
+      error = `${email} has already been added.`;
+    }
+
+    if (!isEmail(email)) {
+      error = `${email} is not a valid email address.`;
+    }
+
+    if (error) {
+      return false;
+    }
+
+    return true;
+  }
+  console.log(tochip);
+
+  function isInList(email) {
+      
+    if(tochip.includes(email)){
+        return true
+    }
+    else if(ccchip.includes(email)){
+        return true
+    }
+    else if(bccchip.includes(email)){
+        return true
+    }
+    else{
+        return false
+    }
+
+  }
+
+  function isEmail(email) {
+    return /[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/.test(email);
+  }
 
   const selectday = (event) => {
     // event.currentTarget.classList.add('selected');
@@ -110,6 +167,90 @@ function CreateMail() {
     } else {
       setDaySelected(event.currentTarget.id);
     }
+  };
+
+  const handleToKeyDown = (event) => {
+    if (["Enter", "Tab", ","].includes(event.key)) {
+      event.preventDefault();
+
+      var value = tovalue.trim();
+
+      if (value && isValid(value)) {
+        setToChip([...tochip, tovalue]);
+        setToValue("");
+      }
+    }
+  };
+
+  const handleBccKeyDown = (event) => {
+    if (["Enter", "Tab", ","].includes(event.key)) {
+      event.preventDefault();
+
+      var value = bccvalue.trim();
+
+      if (value && isValid(value)) {
+        setBccChip([...bccchip, bccvalue]);
+        setBccValue("");
+      }
+    }
+  };
+
+  const handleCcKeyDown = (event) => {
+    if (["Enter", "Tab", ","].includes(event.key)) {
+      event.preventDefault();
+
+      var value = ccvalue.trim();
+
+      if (value && isValid(value)) {
+        setCcChip([...ccchip, ccvalue]);
+        setCcValue("");
+      }
+    }
+  };
+
+  const handleBccPaste = (event) => {
+    event.preventDefault();
+    var paste = event.clipboardData.getData("text");
+    var emails = paste.match(/[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/g);
+
+    if (emails) {
+      var bccBeAdded = emails.filter((email) => !isInList(email));
+      setBccChip([...bccchip, ...bccBeAdded]);
+    }
+  };
+
+  const handleToPaste = (event) => {
+    event.preventDefault();
+    var paste = event.clipboardData.getData("text");
+    var emails = paste.match(/[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/g);
+
+    if (emails) {
+      var toBeAdded = emails.filter((email) => !isInList(email));
+      setToChip([...tochip, ...toBeAdded]);
+    }
+  };
+
+  const handleCcPaste = (event) => {
+    event.preventDefault();
+    var paste = event.clipboardData.getData("text");
+    var emails = paste.match(/[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/g);
+
+    if (emails) {
+      var ccBeAdded = emails.filter((email) => !isInList(email));
+      setCcChip([...ccchip, ...ccBeAdded]);
+    }
+  };
+
+  const handleCcChange = (event) => {
+    setCcValue(event.target.value);
+  };
+
+  const handleBccChange = (event) => {
+    setBccValue(event.target.value);
+  };
+
+  const handleToChange = (event) => {
+    setToValue(event.target.value);
   };
 
   const selectTime = (event) => {
@@ -144,22 +285,33 @@ function CreateMail() {
   function closeModal() {
     setIsOpen(false);
   }
-  
-  const addMail=()=>{
-    const data={
-    to: toRef.current.value.split(','),
-    cc: ccRef.current.value.split(','),
-    bcc: bccRef.current.value.split(','),
-    subject: subRef.current.value,
-    body: bodyRef.current.value,
-    day: daySelected,
-    date: daySelected,
-    time: timeSelected,
-    month: monthSelected
-  }
-      console.log(data)
-  }
-   
+
+  const addMail = () => {
+    const data = {
+      to: toRef.current.value.split(","),
+      cc: ccRef.current.value.split(","),
+      bcc: bccRef.current.value.split(","),
+      subject: subRef.current.value,
+      body: bodyRef.current.value,
+      day: daySelected,
+      date: daySelected,
+      time: timeSelected,
+      month: monthSelected,
+    };
+    console.log(data);
+  };
+
+  const handleDelete = (chipToDelete) => () => {
+    setToChip((chips) => chips.filter((chip) => chip !== chipToDelete));
+  };
+
+  const handleCcDelete = (chipToDelete) => () => {
+    setCcChip((chips) => chips.filter((chip) => chip !== chipToDelete));
+  };
+
+  const handleBccDelete = (chipToDelete) => () => {
+    setBccChip((chips) => chips.filter((chip) => chip !== chipToDelete));
+  };
 
   // var M
   // document.addEventListener('DOMContentLoaded', function() {
@@ -177,7 +329,37 @@ function CreateMail() {
                 <label>To:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input inputRef={toRef} placeholder="To" style={{ width: "90%" }} />
+                <Grid container>
+                  <Grid item xs={12}>
+                    <div className={classes.root}>
+                      {tochip.map((chip) => {
+                        let icon;
+
+                        return (
+                          <li key={chip}>
+                            <Chip
+                              icon={icon}
+                              label={chip}
+                              onDelete={handleDelete(chip)}
+                              className={classes.chip}
+                            />
+                          </li>
+                        );
+                      })}
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Input
+                      value={tovalue}
+                      inputRef={toRef}
+                      placeholder="To"
+                      onKeyDown={handleToKeyDown}
+                      onChange={handleToChange}
+                      onPaste={handleToPaste}
+                      style={{ width: "90%" }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}></Grid>
             </Grid>
@@ -186,7 +368,37 @@ function CreateMail() {
                 <label>CC:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input inputRef={ccRef} placeholder="CC" style={{ width: "90%" }} />
+                <Grid container>
+                  <Grid item xs={12}>
+                    <div className={classes.root}>
+                      {ccchip.map((chip) => {
+                        let icon;
+
+                        return (
+                          <li key={chip}>
+                            <Chip
+                              icon={icon}
+                              label={chip}
+                              onDelete={handleCcDelete(chip)}
+                              className={classes.chip}
+                            />
+                          </li>
+                        );
+                      })}
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Input
+                      value={ccvalue}
+                      inputRef={ccRef}
+                      placeholder="CC"
+                      onKeyDown={handleCcKeyDown}
+                      onChange={handleCcChange}
+                      onPaste={handleCcPaste}
+                      style={{ width: "90%" }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Grid container style={{ paddingBottom: "1rem" }}>
@@ -194,7 +406,37 @@ function CreateMail() {
                 <label>BCC:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input inputRef={bccRef} placeholder="BCC" style={{ width: "90%" }} />
+                <Grid container>
+                  <Grid item xs={12}>
+                  <div className={classes.root}>
+                      {bccchip.map((chip) => {
+                        let icon;
+
+                        return (
+                          <li key={chip}>
+                            <Chip
+                              icon={icon}
+                              label={chip}
+                              onDelete={handleBccDelete(chip)}
+                              className={classes.chip}
+                            />
+                          </li>
+                        );
+                      })}
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Input
+                      value={bccvalue}
+                      inputRef={bccRef}
+                      placeholder="BCC"
+                      onKeyDown={handleBccKeyDown}
+                      onChange={handleBccChange}
+                      onPaste={handleBccPaste}
+                      style={{ width: "90%" }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Grid container style={{ paddingBottom: "1rem" }}>
@@ -202,7 +444,11 @@ function CreateMail() {
                 <label>Subject:</label>
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
-                <Input inputRef={subRef} placeholder="Subject" style={{ width: "90%" }} />
+                <Input
+                  inputRef={subRef}
+                  placeholder="Subject"
+                  style={{ width: "90%" }}
+                />
               </Grid>
             </Grid>
             <Grid container style={{ paddingBottom: "1rem" }}>
@@ -236,7 +482,7 @@ function CreateMail() {
                   </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -244,7 +490,7 @@ function CreateMail() {
                     >
                       Schedule Mail
                     </Button>
-                    </Grid>
+                  </Grid>
                 </Grid>
               </div>
             ) : type === "Weekly" && daySelected && timeSelected ? (
@@ -267,7 +513,7 @@ function CreateMail() {
                   </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -275,7 +521,7 @@ function CreateMail() {
                     >
                       Schedule Mail
                     </Button>
-                    </Grid>
+                  </Grid>
                 </Grid>
               </div>
             ) : type === "Monthly" && dateSelected && timeSelected ? (
@@ -298,7 +544,7 @@ function CreateMail() {
                   </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -306,7 +552,7 @@ function CreateMail() {
                     >
                       Schedule Mail
                     </Button>
-                    </Grid>
+                  </Grid>
                 </Grid>
               </div>
             ) : type === "Yearly" &&
@@ -332,7 +578,7 @@ function CreateMail() {
                   </Grid>
                 </Grid>
                 <Grid container>
-                    <Grid item xs={12} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -340,7 +586,7 @@ function CreateMail() {
                     >
                       Schedule Mail
                     </Button>
-                    </Grid>
+                  </Grid>
                 </Grid>
               </div>
             ) : (
@@ -611,7 +857,9 @@ function CreateMail() {
           {type ? (
             <Grid container>
               <Grid item xs={12}>
-                <Button variant="contained" id="cntbtn">Continue</Button>
+                <Button variant="contained" id="cntbtn">
+                  Continue
+                </Button>
               </Grid>
             </Grid>
           ) : (
