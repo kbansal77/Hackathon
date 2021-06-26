@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link, useHistory } from 'react-router-dom'
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -12,6 +12,7 @@ import Modal from "react-modal";
 import Chip from "@material-ui/core/Chip";
 import TagFacesIcon from "@material-ui/icons/TagFaces";
 import { makeStyles } from "@material-ui/core/styles";
+import { useAuth } from "../../contexts/AuthContext";
 
 import Navbar from "../../components/navbar/navbar";
 import "./createMail.css";
@@ -103,6 +104,8 @@ function CreateMail() {
   const classes = useStyles();
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const {currentUser } = useAuth();
+  const history = useHistory()
   const [type, setType] = React.useState("");
   const [daySelected, setDaySelected] = React.useState("");
   const [dateSelected, setDateSelected] = React.useState("");
@@ -286,21 +289,6 @@ function CreateMail() {
     setIsOpen(false);
   }
 
-  const addMail = () => {
-    const data = {
-      to: toRef.current.value.split(","),
-      cc: ccRef.current.value.split(","),
-      bcc: bccRef.current.value.split(","),
-      subject: subRef.current.value,
-      body: bodyRef.current.value,
-      day: daySelected,
-      date: daySelected,
-      time: timeSelected,
-      month: monthSelected,
-    };
-    console.log(data);
-  };
-
   const handleDelete = (chipToDelete) => () => {
     setToChip((chips) => chips.filter((chip) => chip !== chipToDelete));
   };
@@ -312,6 +300,50 @@ function CreateMail() {
   const handleBccDelete = (chipToDelete) => () => {
     setBccChip((chips) => chips.filter((chip) => chip !== chipToDelete));
   };
+  
+  const addMail=()=>{
+    const maildata={
+    "to": toRef.current.value.split(','),
+    "cc": ccRef.current.value.split(','),
+    "bcc": bccRef.current.value.split(','),
+    "subject": subRef.current.value,
+    "body": bodyRef.current.value,
+    "day": daySelected,
+    "date": dateSelected,
+    "time": timeSelected,
+    "month": monthSelected,
+    "type": type,
+    "sender": currentUser.email
+  }
+  console.log(maildata)
+  fetch('https://6a9d0e005d61.ngrok.io/mails', {
+    method: 'POST', // or 'PUT'
+    body: JSON.stringify(maildata),
+    headers: {
+      'Content-Type': 'application/json',      
+    }
+    
+  })
+    .then(response => response.json()).then(data => {
+      console.log(data);
+      alert(data.message)
+      toRef.current.value=""
+      ccRef.current.value=""
+      bccRef.current.value=""
+      subRef.current.value=""
+      bodyRef.current.value=""
+      setDaySelected("")
+      setDateSelected("")
+      setTimeSelected("")
+      setMonthSelected("")
+      setType("")
+      history.push("/dashboard")
+
+
+    })
+    .catch(err => { console.log(err) })
+  }
+   
 
   // var M
   // document.addEventListener('DOMContentLoaded', function() {
@@ -857,9 +889,7 @@ function CreateMail() {
           {type ? (
             <Grid container>
               <Grid item xs={12}>
-                <Button variant="contained" id="cntbtn">
-                  Continue
-                </Button>
+                <Button variant="contained" id="cntbtn" onClick={closeModal}>Continue</Button>
               </Grid>
             </Grid>
           ) : (

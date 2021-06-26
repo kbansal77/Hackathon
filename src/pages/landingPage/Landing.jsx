@@ -1,7 +1,7 @@
 
 import Navbar from "../../components/navbar/navbar";
 import { Container, Grid, Button } from '@material-ui/core';
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import { useAuth } from '../../contexts/AuthContext';
 import { makeStyles } from '@material-ui/core/styles';
@@ -101,7 +101,7 @@ const Landing = () => {
     }
     async function loginHandle(e) {
         e.preventDefault()
-        var blah = await emailLogin(email, pass)
+        await emailLogin(email, pass)
         setEmail("")
         setPass("")
         history.push('/dashboard');
