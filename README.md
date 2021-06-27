@@ -19,5 +19,5 @@ Mailman is a website aimed at making the tedious task of scheduling bulk emails 
 - **Frontend:** [https://github.com/kbansal77/Mailman](https://github.com/kbansal77/Mailman)
 
 - **Backend:** [https://github.com/parading-purple-drumhead/mailman-backend](https://github.com/parading-purple-drumhead/mailman-backend)
-## Deployed Link
+## Deployment Link
 - [Mailman](https://mailman-azure.vercel.app/) _(Deployed on Vercel)_
