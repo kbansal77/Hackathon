@@ -122,7 +122,7 @@ const Landing = () => {
             "_id": email,
             "displayName":name
         }
-        fetch('https://dec8cb42e1f7.ngrok.io/users', {
+        fetch('https://mailman-backend.herokuapp.com/users', {
         method: 'POST',
         body: JSON.stringify(sdata),
         headers: {
@@ -156,8 +156,8 @@ const Landing = () => {
                 <Grid container className="cont">
                     <Grid item xs={8}>
                         <div id="textdiv">
-                            <p id="title1">Lorem ipsumae ullam reprehenderit s culpa ipsa natus!</p>
-                            <p id="title2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique ut odit delectus dignissimos </p>
+                            <h2 id="title1"><i>Scheduling your mails, now easier!</i></h2>
+                            <p id="title2"><i>Send recurring mails at the click of a button </i></p>
 
                             {currentUser ? (
                                 

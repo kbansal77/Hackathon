@@ -324,7 +324,7 @@ function CreateMail() {
         "sender": currentUser.email
       }
       console.log(maildata)
-      fetch('https://dec8cb42e1f7.ngrok.io/mails', {
+      fetch('https://mailman-backend.herokuapp.com/mails', {
         method: 'POST', // or 'PUT'
         body: JSON.stringify(maildata),
         headers: {

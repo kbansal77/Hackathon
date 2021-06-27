@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useHistory } from 'react-router-dom'
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -11,7 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { useAuth } from "../../contexts/AuthContext";
 import Navbar from "../../components/navbar/navbar";
 import "./editMail.css";
 
@@ -101,6 +101,7 @@ const weeks = [
 function EditMail(props) {
   const classes = useStyles();
   let subtitle;
+  const { currentUser } = useAuth();
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [type, setType] = React.useState(props.location.state.type);
   const [daySelected, setDaySelected] = React.useState(
@@ -115,7 +116,7 @@ function EditMail(props) {
   const [timeSelected, setTimeSelected] = React.useState(
     props.location.state.time || ""
   );
-
+  const history = useHistory()
   const [tovalue, setToValue] = React.useState("");
   const [tochip, setToChip] = React.useState(props.location.state.to);
   const [ccvalue, setCcValue] = React.useState("");
@@ -124,6 +125,7 @@ function EditMail(props) {
   const [bccchip, setBccChip] = React.useState(props.location.state.bcc);
   const [subject, setSubject] = React.useState(props.location.state.subject);
   const [body, setBody] = React.useState(props.location.state.body);
+  var mailId = props.location.state._id;
   
 
 
@@ -144,7 +146,7 @@ function EditMail(props) {
 
     return true;
   }
-  console.log(tochip);
+  // console.log(tochip);
 
   function isInList(email) {
     if (tochip.includes(email)) {
@@ -285,10 +287,10 @@ function EditMail(props) {
       setMonthSelected(event.target.value);
     }
   };
-  console.log(timeSelected);
-  console.log(dateSelected);
-  console.log(daySelected);
-  console.log(monthSelected);
+  // console.log(timeSelected);
+  // console.log(dateSelected);
+  // console.log(daySelected);
+  // console.log(monthSelected);
   
   const handlesubjectchange =(event) =>{
     setSubject(event.target.value)
@@ -311,6 +313,48 @@ function EditMail(props) {
 
   function closeModal() {
     setIsOpen(false);
+  }
+  const editMail = () => {
+    if (subject == "" || body == "") {
+      alert("Subject and body is required")
+    } else {
+
+
+      const maildata = {
+        "to": tochip,
+        "cc": ccchip,
+        "bcc": bccchip,
+        "subject": subject,
+        "body": body,
+        "day": daySelected,
+        "date": dateSelected,
+        "time": timeSelected,
+        "month": monthSelected,
+        "type": type,
+        "sender": currentUser.email,
+        "displayName": currentUser.displayName
+        
+      }
+      console.log(maildata)
+      console.log(mailId)
+      fetch(`https://mailman-backend.herokuapp.com/mails/${mailId}`, {
+        method: 'PATCH', // or 'PUT'
+        body: JSON.stringify(maildata),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+
+      })
+        .then(response => response.json()).then(data => {
+          console.log(data);
+          alert(data.message)         
+          
+          history.push("/dashboard")
+
+
+        })
+        .catch(err => { console.log(err) })
+    }
   }
   // var M
   // document.addEventListener('DOMContentLoaded', function() {
@@ -495,7 +539,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
+                    <Button variant="contained" onClick={editMail} style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -522,7 +566,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
+                    <Button variant="contained"  onClick={editMail} style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -549,7 +593,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
+                    <Button variant="contained" onClick={editMail} style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -579,7 +623,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
+                    <Button variant="contained" onClick={editMail} style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -683,7 +727,7 @@ function EditMail(props) {
           {type === "Weekly" ? (
             <div>
               <Grid container>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Day</span>
                 </Grid>
               </Grid>
@@ -708,7 +752,7 @@ function EditMail(props) {
                 ))}
               </Grid>
               <Grid container>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
               </Grid>
@@ -757,7 +801,7 @@ function EditMail(props) {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
 
@@ -785,7 +829,7 @@ function EditMail(props) {
           {type === "Yearly" ? (
             <div>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Date</span>
                 </Grid>
                 <Grid item xs={8}>
@@ -805,7 +849,7 @@ function EditMail(props) {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4}style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   Select A Month
                 </Grid>
                 <Grid item xs={8}>
@@ -825,7 +869,7 @@ function EditMail(props) {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
 

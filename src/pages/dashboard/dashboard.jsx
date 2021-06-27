@@ -104,7 +104,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (currentUser){
-      fetch('https://dec8cb42e1f7.ngrok.io/mails', {
+      fetch('https://mailman-backend.herokuapp.com/mails', {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ function Dashboard() {
   
 
  const reload =()=>{
-  fetch('https://dec8cb42e1f7.ngrok.io/mails', {
+  fetch('https://mailman-backend.herokuapp.com/mails', {
     method: 'GET', // or 'PUT'
     headers: {
       'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ function Dashboard() {
 
   const classes = useStyles();
   const editMail = (id) => {
-    fetch(`https://dec8cb42e1f7.ngrok.io/mails/${id}`, {
+    fetch(`https://mailman-backend.herokuapp.com/mails/${id}`, {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ function Dashboard() {
       .catch(err => { console.log(err) })
   }
 const delMail =(id) =>{
-  fetch(`https://dec8cb42e1f7.ngrok.io/mails/${id}`, {
+  fetch(`https://mailman-backend.herokuapp.com/mails/${id}`, {
       method: 'DELETE', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -308,6 +308,7 @@ const delMail =(id) =>{
           </TabPanel>
           <TabPanel value={value} index={1}>
           {!isLoading && mails.map((mail) => (
+            mail.last_sent != "" ?(
               <List component="nav" >
                 <ListItem button onClick={() => { handleClick(mail._id) }}>
                   <ListItemText
@@ -358,7 +359,7 @@ const delMail =(id) =>{
                     <ListItemText >
                       <Container>
                         <Grid container className="collp">
-                          <Grid item lg={8} xs={6}>
+                          <Grid item lg={4} xs={6}>
                             <Typography
                               component="span"
                               color="textPrimary"
@@ -389,6 +390,16 @@ const delMail =(id) =>{
 
 
                           </Grid>
+                          <Grid item lg={4} xs={6}>
+                            <Typography
+                              component="span"
+                              color="textPrimary"
+                            >
+                              Last Sent:
+                            </Typography>
+                            {" "}{mail.last_sent}
+                            
+                          </Grid>
                         </Grid>
                         
 
@@ -401,7 +412,7 @@ const delMail =(id) =>{
 
                   </List>
                 </Collapse>
-              </List>
+              </List>) : null
             ))}
             
           </TabPanel>
