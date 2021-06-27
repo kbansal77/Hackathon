@@ -302,6 +302,7 @@ function CreateMail() {
     setBccChip((chips) => chips.filter((chip) => chip !== chipToDelete));
   };
 
+
   const addMail = () => {
     var subject = subRef.current.value.trim();
     var body = bodyRef.current.value.trim();
