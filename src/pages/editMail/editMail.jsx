@@ -337,7 +337,7 @@ function EditMail(props) {
       }
       console.log(maildata)
       console.log(mailId)
-      fetch(`https://dec8cb42e1f7.ngrok.io/mails/${mailId}`, {
+      fetch(`https://mailman-backend.herokuapp.com/mails/${mailId}`, {
         method: 'PATCH', // or 'PUT'
         body: JSON.stringify(maildata),
         headers: {
@@ -727,7 +727,7 @@ function EditMail(props) {
           {type === "Weekly" ? (
             <div>
               <Grid container>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Day</span>
                 </Grid>
               </Grid>
@@ -752,7 +752,7 @@ function EditMail(props) {
                 ))}
               </Grid>
               <Grid container>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
               </Grid>
@@ -801,7 +801,7 @@ function EditMail(props) {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
 
@@ -829,7 +829,7 @@ function EditMail(props) {
           {type === "Yearly" ? (
             <div>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Date</span>
                 </Grid>
                 <Grid item xs={8}>
@@ -849,7 +849,7 @@ function EditMail(props) {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4}style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   Select A Month
                 </Grid>
                 <Grid item xs={8}>
@@ -869,7 +869,7 @@ function EditMail(props) {
                 </Grid>
               </Grid>
               <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
 

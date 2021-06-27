@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap%27');
 
 #title1 {
-    color: black;
-    font-size: 1.5rem;
+    color:#3EBDF1;
+    font-size: 3rem;
+    text-align: center;
     
 }
 
 #title2 {
     color: black;   
-    font-size: 1.5rem;
+    font-size: 2rem;
+    text-align: center;
 }
 
 .cont{

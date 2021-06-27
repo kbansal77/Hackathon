@@ -15,7 +15,7 @@ function addUserDetails(name, email) {
     _id: email,
     displayName: name,
   };
-  fetch("https://dec8cb42e1f7.ngrok.io/users", {
+  fetch("https://mailman-backend.herokuapp.com/users", {
     method: "POST",
     body: JSON.stringify(sdata),
     headers: {
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
   const [displayName, setDisplayName] = useState("")
 
   async function getusername(email){
-    var response = await fetch(`https://dec8cb42e1f7.ngrok.io/users/${email}`)
+    var response = await fetch(`https://mailman-backend.herokuapp.com/${email}`)
     var data = await response.json()
     setDisplayName(data.user.displayName)
   }
