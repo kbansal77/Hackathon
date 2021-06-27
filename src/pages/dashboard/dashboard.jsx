@@ -300,7 +300,103 @@ const delMail =(id) =>{
 
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Page Two
+          {!isLoading && mails.map((mail) => (
+              <List component="nav" >
+                <ListItem button onClick={() => { handleClick(mail._id) }}>
+                  <ListItemText
+                    secondary={
+                      <React.Fragment>
+                        <Grid container>
+                          <Grid item xs={3} className={`${open ? '' : 'limit'}`}>
+                            <Typography
+                              component="span"
+                              color="textPrimary"
+                            >
+                              To:
+                            </Typography>
+                            {mail.to.map((rec) => (
+                              ` ${rec},   `
+                            ))}
+                          </Grid>
+                          <Grid item xs={7} className={`${open ? '' : 'limit'}`}>
+                            <Typography
+                              component="span"
+                              color="textPrimary">
+                              Subject:
+                            </Typography>
+                            {" "}{mail.subject}
+
+                          </Grid>
+                          <Grid item xs={2}>
+                            <Typography
+                              component="span"
+                              color="textPrimary">
+                              Type:
+                            </Typography>
+                            {" "}{mail.type}
+
+                          </Grid>
+                        </Grid>
+                      </React.Fragment>
+                    }
+                  />
+
+                  {open ? <ExpandLess /> : <ExpandMore />}
+
+                </ListItem>
+                <Collapse in={mail._id === selectedId} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+
+
+                    <ListItemText >
+                      <Container>
+                        <Grid container className="collp">
+                          <Grid item lg={8} xs={6}>
+                            <Typography
+                              component="span"
+                              color="textPrimary"
+                            >
+                              CC:
+                            </Typography>
+                            {mail.cc.map((rec) => (
+                              ` ${rec},`
+                            ))}
+                            
+                          </Grid>
+                          <Grid item lg={4} xs={6}>
+                            <Typography
+                              component="span"
+                              color="textPrimary"
+                            >
+                              BCC:
+                            </Typography>
+                            {mail.bcc.map((rec) => (
+                              ` ${rec},`
+                            ))}
+                            {/* <Button variant="outlined" id="editbtn" onClick={() => { editMail(mail._id) }} endIcon={<EditIcon />}>
+                              Edit Mail
+                            </Button>
+                            <Button variant="outlined" id="delbtn" color="secondary" endIcon={<DeleteIcon />} onClick={()=>{delMail(mail._id)}}>
+                              Delete Mail
+                            </Button> */}
+
+
+                          </Grid>
+                        </Grid>
+                        
+
+                        <Card style={{ padding: "2rem " }}>
+                          {mail.body}
+                        </Card>
+
+                      </Container>
+                    </ListItemText>
+
+                  </List>
+                </Collapse>
+              </List>
+            ))}
+            
           </TabPanel>
 
 

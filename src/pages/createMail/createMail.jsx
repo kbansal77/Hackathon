@@ -103,7 +103,7 @@ function CreateMail() {
   const classes = useStyles();
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const {currentUser } = useAuth();
+  const { currentUser } = useAuth();
   const history = useHistory()
   const [type, setType] = React.useState("");
   const [daySelected, setDaySelected] = React.useState("");
@@ -142,18 +142,18 @@ function CreateMail() {
   console.log(tochip);
 
   function isInList(email) {
-      
-    if(tochip.includes(email)){
-        return true
+
+    if (tochip.includes(email)) {
+      return true
     }
-    else if(ccchip.includes(email)){
-        return true
+    else if (ccchip.includes(email)) {
+      return true
     }
-    else if(bccchip.includes(email)){
-        return true
+    else if (bccchip.includes(email)) {
+      return true
     }
-    else{
-        return false
+    else {
+      return false
     }
 
   }
@@ -172,7 +172,7 @@ function CreateMail() {
   };
 
   const handleToKeyDown = (event) => {
-    if (["Enter", "Tab", ","," "].includes(event.key)) {
+    if (["Enter", "Tab", ",", " "].includes(event.key)) {
       event.preventDefault();
 
       var value = tovalue.trim();
@@ -299,56 +299,65 @@ function CreateMail() {
   const handleBccDelete = (chipToDelete) => () => {
     setBccChip((chips) => chips.filter((chip) => chip !== chipToDelete));
   };
-  
-  const addMail=()=>{
-    const maildata={
-    "to": tochip,
-    "cc": ccchip,
-    "bcc": bccchip,
-    "subject": subRef.current.value,
-    "body": bodyRef.current.value,
-    "day": daySelected,
-    "date": dateSelected,
-    "time": timeSelected,
-    "month": monthSelected,
-    "type": type,
-    "sender": currentUser.email
-  }
-  console.log(maildata)
-  fetch('https://dec8cb42e1f7.ngrok.io/mails', {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify(maildata),
-    headers: {
-      'Content-Type': 'application/json',      
+
+  const addMail = () => {
+    var subject = subRef.current.value.trim();
+    var body = bodyRef.current.value.trim();
+    if (subject == "" || body == "") {
+      alert("Subject and body is required")
+    } else {
+
+
+      const maildata = {
+        "to": tochip,
+        "cc": ccchip,
+        "bcc": bccchip,
+        "subject": subject,
+        "body": body,
+        "day": daySelected,
+        "date": dateSelected,
+        "time": timeSelected,
+        "month": monthSelected,
+        "type": type,
+        "sender": currentUser.email,
+        "displayName": currentUser.displayName
+      }
+      console.log(maildata)
+      fetch('https://dec8cb42e1f7.ngrok.io/mails', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(maildata),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+
+      })
+        .then(response => response.json()).then(data => {
+          console.log(data);
+          alert(data.message)
+          toRef.current.value = ""
+          ccRef.current.value = ""
+          bccRef.current.value = ""
+          subRef.current.value = ""
+          bodyRef.current.value = ""
+          setDaySelected("")
+          setDateSelected("")
+          setTimeSelected("")
+          setMonthSelected("")
+          setType("")
+          setToValue("")
+          setCcValue("")
+          setBccValue("")
+          setToChip([])
+          setCcChip([])
+          setBccChip([])
+          history.push("/dashboard")
+
+
+        })
+        .catch(err => { console.log(err) })
     }
-    
-  })
-    .then(response => response.json()).then(data => {
-      console.log(data);
-      alert(data.message)
-      toRef.current.value=""
-      ccRef.current.value=""
-      bccRef.current.value=""
-      subRef.current.value=""
-      bodyRef.current.value=""
-      setDaySelected("")
-      setDateSelected("")
-      setTimeSelected("")
-      setMonthSelected("")
-      setType("")
-      setToValue("")
-      setCcValue("")
-      setBccValue("")
-      setToChip([])
-      setCcChip([])
-      setBccChip([])
-      history.push("/dashboard")
-
-
-    })
-    .catch(err => { console.log(err) })
   }
-   
+
 
   // var M
   // document.addEventListener('DOMContentLoaded', function() {
@@ -389,7 +398,7 @@ function CreateMail() {
                     <Input
                       value={tovalue}
                       inputRef={toRef}
-                      placeholder="Press Enter, Spacebar or , after typing mail" 
+                      placeholder="Press Enter, Spacebar or , after typing mail"
                       onKeyDown={handleToKeyDown}
                       onChange={handleToChange}
                       onPaste={handleToPaste}
@@ -445,7 +454,7 @@ function CreateMail() {
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
                 <Grid container>
                   <Grid item xs={12}>
-                  <div className={classes.root}>
+                    <div className={classes.root}>
                       {bccchip.map((chip) => {
                         let icon;
 
@@ -512,7 +521,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -522,7 +531,7 @@ function CreateMail() {
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                       onClick={addMail}
                     >
                       Schedule Mail
@@ -543,7 +552,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -553,7 +562,7 @@ function CreateMail() {
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                       onClick={addMail}
                     >
                       Schedule Mail
@@ -574,7 +583,7 @@ function CreateMail() {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -584,7 +593,7 @@ function CreateMail() {
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                       onClick={addMail}
                     >
                       Schedule Mail
@@ -606,6 +615,7 @@ function CreateMail() {
                   </Grid>
                   <Grid item xs={4} style={{ textAlign: "center" }}>
                     <Button
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                       variant="contained"
                       onClick={openModal}
                       color="primary"
@@ -618,7 +628,7 @@ function CreateMail() {
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                       onClick={addMail}
                     >
                       Schedule Mail
@@ -630,9 +640,10 @@ function CreateMail() {
               <Grid container>
                 <Grid item style={{ textAlign: "center" }} xs={12}>
                   <Button
+                  style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}
                     variant="contained"
-                    onClick={openModal}
-                    color="primary"
+                    onClick={openModal}                    
+                    
                   >
                     Select Schedule
                   </Button>
@@ -702,8 +713,8 @@ function CreateMail() {
         overlayClassName="myoverlay"
       >
         <Container style={{ textAlign: "center" }}>
-          <Grid container>
-            <Grid item xs={6}>
+          <Grid container style={{padding: ".5rem"}}>
+            <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
               Send Mail Every
             </Grid>
             <Grid item xs={6}>
@@ -723,8 +734,8 @@ function CreateMail() {
           </Grid>
           {type === "Weekly" ? (
             <div>
-              <Grid container>
-                <Grid item xs={12}>
+              <Grid container >
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Day</span>
                 </Grid>
               </Grid>
@@ -739,17 +750,16 @@ function CreateMail() {
                       id={day}
                       key={day}
                       onClick={selectday}
-                      className={`${
-                        daySelected === day ? "selected" : ""
-                      } btn dayclass`}
+                      className={`${daySelected === day ? "selected" : ""
+                        } btn dayclass`}
                     >
                       {day}
                     </div>
                   </Grid>
                 ))}
               </Grid>
-              <Grid container>
-                <Grid item xs={12}>
+              <Grid container >
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
               </Grid>
@@ -777,11 +787,11 @@ function CreateMail() {
           )}
           {type === "Monthly" ? (
             <div>
-              <Grid container>
-                <Grid item xs={4}>
+              <Grid container style={{padding: "1rem"}}> 
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Date</span>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -797,12 +807,12 @@ function CreateMail() {
                   </Select>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={4}>
+              <Grid container style={{padding: "1rem"}}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <TextField
                     id="time"
                     label=""
@@ -825,11 +835,11 @@ function CreateMail() {
           )}
           {type === "Yearly" ? (
             <div>
-              <Grid container>
-                <Grid item xs={4}>
+              <Grid container style={{padding: "1rem"}}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Date</span>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -845,11 +855,11 @@ function CreateMail() {
                   </Select>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={4}>
+              <Grid container style={{padding: "1rem"}}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   Select A Month
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -865,12 +875,12 @@ function CreateMail() {
                   </Select>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={4}>
+              <Grid container style={{padding: "1rem"}}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select Time</span>
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <TextField
                     id="time"
                     label=""

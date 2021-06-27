@@ -19,7 +19,7 @@ function Navbar({page}) {
         <Container>
             <Grid container id="nav" >
                 <Grid item lg={8} sm={7} xs={6}>
-                    <span id="navhead">
+                    <span onClick={()=>{history.push("/dashboard")}} id="navhead" style={{cursor:"pointer"}} >
                         Mailman
                     </span>
                 </Grid>

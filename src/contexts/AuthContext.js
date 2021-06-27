@@ -19,37 +19,14 @@ export function AuthProvider({ children }) {
   function Gsignup() {
     var provider = new firebase.auth.GoogleAuthProvider();
     // console.log(provider)
-     return  firebase.auth().signInWithPopup(provider).then((result)=>{
-      const User = result.user
-          
-    
-     })
+     return  firebase.auth().signInWithPopup(provider)
   }
   function emailSignup(email,password){
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in 
-        var user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ..
-      });
+     return auth.createUserWithEmailAndPassword(email, password)
   }
 
   function emailLogin(email,password){
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-      });
+    return auth.signInWithEmailAndPassword(email, password)
   }
 
   function logout(){

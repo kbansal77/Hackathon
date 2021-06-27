@@ -122,6 +122,10 @@ function EditMail(props) {
   const [ccchip, setCcChip] = React.useState(props.location.state.cc);
   const [bccvalue, setBccValue] = React.useState("");
   const [bccchip, setBccChip] = React.useState(props.location.state.bcc);
+  const [subject, setSubject] = React.useState(props.location.state.subject);
+  const [body, setBody] = React.useState(props.location.state.body);
+  
+
 
   function isValid(email) {
     let error = null;
@@ -172,7 +176,7 @@ function EditMail(props) {
   };
 
   const handleBccKeyDown = (event) => {
-    if (["Enter", "Tab", ","].includes(event.key)) {
+    if (["Enter", "Tab", ","," "].includes(event.key)) {
       event.preventDefault();
 
       var value = bccvalue.trim();
@@ -185,7 +189,7 @@ function EditMail(props) {
   };
 
   const handleCcKeyDown = (event) => {
-    if (["Enter", "Tab", ","].includes(event.key)) {
+    if (["Enter", "Tab", ","," "].includes(event.key)) {
       event.preventDefault();
 
       var value = ccvalue.trim();
@@ -285,6 +289,13 @@ function EditMail(props) {
   console.log(dateSelected);
   console.log(daySelected);
   console.log(monthSelected);
+  
+  const handlesubjectchange =(event) =>{
+    setSubject(event.target.value)
+  }
+  const handlebodychange =(event) =>{
+    setBody(event.target.value)
+  }
   const handleChange = (event) => {
     setType(event.target.value);
   };
@@ -444,7 +455,8 @@ function EditMail(props) {
               </Grid>
               <Grid item xs={11} style={{ paddingBottom: "1rem" }}>
                 <Input
-                  defaultValue={props.location.state.subject}
+                  value={subject}
+                  onChange={handlesubjectchange}
                   placeholder="Subject"
                   style={{ width: "90%" }}
                 />
@@ -460,7 +472,8 @@ function EditMail(props) {
                   style={{ width: "90%" }}
                   multiline
                   rows={6}
-                  defaultValue={props.location.state.body}
+                  value={body}
+                onChange={handlebodychange}
                 />
               </Grid>
             </Grid>
@@ -474,7 +487,7 @@ function EditMail(props) {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -482,7 +495,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -501,7 +514,7 @@ function EditMail(props) {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -509,7 +522,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -528,7 +541,7 @@ function EditMail(props) {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -536,7 +549,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -558,7 +571,7 @@ function EditMail(props) {
                     <Button
                       variant="contained"
                       onClick={openModal}
-                      color="primary"
+                      style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                     >
                       Edit Schedule
                     </Button>
@@ -566,7 +579,7 @@ function EditMail(props) {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem",fontSize:"1.2rem"}}>
                       Edit Mail
                     </Button>
                   </Grid>
@@ -578,7 +591,7 @@ function EditMail(props) {
                   <Button
                     variant="contained"
                     onClick={openModal}
-                    color="primary"
+                    style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}
                   >
                     Select Schedule
                   </Button>
@@ -723,8 +736,8 @@ function EditMail(props) {
           )}
           {type === "Monthly" ? (
             <div>
-              <Grid container>
-                <Grid item xs={4}>
+              <Grid container className="textdiv">
+                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
                   <span>Select A Date</span>
                 </Grid>
                 <Grid item xs={8}>
@@ -840,7 +853,7 @@ function EditMail(props) {
           {type ? (
             <Grid container>
               <Grid item xs={12}>
-                <Button variant="contained" id="cntbtn">
+                <Button variant="contained" onClick={closeModal} style={{backgroundColor:"#3ebdf1" , color: "cornsilk", marginTop: ".6rem"}}>
                   Continue
                 </Button>
               </Grid>
