@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Mailman/static/css/main.4a2e41ee.chunk.css",
+    "main.js": "/Mailman/static/js/main.e1773632.chunk.js",
+    "main.js.map": "/Mailman/static/js/main.e1773632.chunk.js.map",
+    "runtime-main.js": "/Mailman/static/js/runtime-main.b6ae0a83.js",
+    "runtime-main.js.map": "/Mailman/static/js/runtime-main.b6ae0a83.js.map",
+    "static/js/2.beb73cb5.chunk.js": "/Mailman/static/js/2.beb73cb5.chunk.js",
+    "static/js/2.beb73cb5.chunk.js.map": "/Mailman/static/js/2.beb73cb5.chunk.js.map",
+    "static/js/3.5268be1e.chunk.js": "/Mailman/static/js/3.5268be1e.chunk.js",
+    "static/js/3.5268be1e.chunk.js.map": "/Mailman/static/js/3.5268be1e.chunk.js.map",
+    "index.html": "/Mailman/index.html",
+    "static/css/main.4a2e41ee.chunk.css.map": "/Mailman/static/css/main.4a2e41ee.chunk.css.map",
+    "static/js/2.beb73cb5.chunk.js.LICENSE.txt": "/Mailman/static/js/2.beb73cb5.chunk.js.LICENSE.txt",
+    "static/media/mail.acf82e22.png": "/Mailman/static/media/mail.acf82e22.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b6ae0a83.js",
+    "static/js/2.beb73cb5.chunk.js",
+    "static/css/main.4a2e41ee.chunk.css",
+    "static/js/main.e1773632.chunk.js"
+  ]
+}
