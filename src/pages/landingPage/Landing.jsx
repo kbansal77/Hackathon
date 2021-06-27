@@ -18,6 +18,7 @@ import Modal from 'react-modal';
 import mail from '../../images/mail.png'
 import './Landing.css'
 import { useState } from "react";
+import { useEffect } from "react";
 
 Modal.setAppElement('#root')
 
@@ -77,7 +78,8 @@ const Landing = () => {
     const history = useHistory()
     const [pass, setPass] = useState("")
     const [email, setEmail] = useState("")
-    const { Gsignup, emailLogin, emailSignup, currentUser } = useAuth()
+    const [name, setName] = useState("")
+    const { Gsignup, emailLogin, emailSignup, currentUser,error } = useAuth()
     const [value, setValue] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -99,12 +101,20 @@ const Landing = () => {
     function Pchange(e) {
         setPass(e.target.value)
     }
+    function Nchange(e) {
+        setName(e.target.value)
+    }
     async function loginHandle(e) {
         e.preventDefault()
         await emailLogin(email, pass)
-        setEmail("")
-        setPass("")
-        history.push('/dashboard');
+        
+        if (error==""){
+            setEmail("")
+            setPass("")
+            history.push('/dashboard');
+        }
+        closeModal()
+        
     }
 
     async function signupHandle(e) {
@@ -119,6 +129,8 @@ const Landing = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    console.log(error)
+    
 
     return (
         <div>
@@ -138,8 +150,10 @@ const Landing = () => {
                             ) : (                                
                                     <Button variant="contained" id="loginbtn" onClick={openModal}>
                                         Login /Signup
-                                    </Button>                                
+                                    </Button>     
+                                                            
                             )}
+                            {error? <div>{error}</div> : ""}
 
                         </div>
 
@@ -181,7 +195,8 @@ const Landing = () => {
                         </Grid>
                     </Grid>
 
-
+                    
+                     
                     <TabPanel value={value} index={0}>
                         <form className={classes.form} noValidate>
                             <TextField
@@ -218,6 +233,7 @@ const Landing = () => {
                                 color="primary"
                                 className={classes.submit}
                                 onClick={loginHandle}
+                                 
                             >
                                 LogIn
                             </Button>
@@ -241,6 +257,19 @@ const Landing = () => {
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <form className={classes.form} noValidate>
+                        <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="Name"
+                                label="Name"
+                                name="Name"
+                                autoComplete="Name"
+                                value={name}
+                                autoFocus
+                                onChange={Nchange}
+                            />
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -251,7 +280,7 @@ const Landing = () => {
                                 name="email"
                                 autoComplete="email"
                                 value={email}
-                                autoFocus
+                                
                                 onChange={Echange}
                             />
                             <TextField
@@ -282,12 +311,13 @@ const Landing = () => {
                             <Button
                                 type="submit"
                                 fullWidth
-                                variant="outlined"
+                                variant="contained"
                                 color="primary"
                                 className={classes.submit}
                                 onClick={clickhandler}
                                 style={{ height: "3rem" }}
                             >
+
                                 <i class="fab fa-google" style={{ fontSize: "1.5rem", marginRight: ".5rem" }} ></i>
                                 Continue with google
                             </Button>

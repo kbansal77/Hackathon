@@ -42,14 +42,14 @@
     border-radius: 30px; 
     border: 1px solid #3EBDF1; 
     width: 30%;
-    height: 65%;
+    height: 75%;
     top: 50%;
     left: 50%; 
     right: auto;
     bottom: auto;  
     transform: translate(-50%, -50%) ;
     background: #fff;
-    overflow: auto;
+    overflow:visible;
     outline: none;
     
     position: relative;

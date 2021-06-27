@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
+import { useHistory } from 'react-router-dom'
 import firebase from 'firebase/app'
 import  {auth} from "../firebase"
 import axios from 'axios'
@@ -11,7 +12,9 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  const history = useHistory()
   const [currentUser, setCurrentUser] = useState()
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)  
     
   
@@ -26,7 +29,12 @@ export function AuthProvider({ children }) {
   }
 
   function emailLogin(email,password){
-    return auth.signInWithEmailAndPassword(email, password)
+   return auth.signInWithEmailAndPassword(email, password)
+   .then(()=>   {setError("")})
+   .catch((err)=>{
+     setError("Enter correct credentials")
+     
+   })
   }
 
   function logout(){
@@ -50,6 +58,7 @@ export function AuthProvider({ children }) {
     Gsignup,
     emailLogin,
     emailSignup,
+    error,
     logout
   }
 

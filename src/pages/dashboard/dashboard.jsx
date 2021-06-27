@@ -103,7 +103,8 @@ function Dashboard() {
 
 
   useEffect(() => {
-    fetch('https://dec8cb42e1f7.ngrok.io/mails', {
+    if (currentUser){
+      fetch('https://dec8cb42e1f7.ngrok.io/mails', {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -117,7 +118,13 @@ function Dashboard() {
         setIsLoading(false)
       })
       .catch(err => { console.log(err) })
+    }else{
+      history.push('/')
+    }
+    
   }, [])
+
+  
 
  const reload =()=>{
   fetch('https://dec8cb42e1f7.ngrok.io/mails', {
