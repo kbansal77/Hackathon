@@ -117,10 +117,27 @@ const Landing = () => {
         
     }
 
+    function addUserDetail(name, email){
+        const sdata = {
+            "_id": email,
+            "displayName":name
+        }
+        fetch('https://dec8cb42e1f7.ngrok.io/users', {
+        method: 'POST',
+        body: JSON.stringify(sdata),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).catch(err=>{
+          console.log(err)
+      })
+      return true
+    }
+
     async function signupHandle(e) {
         e.preventDefault()
         await emailSignup(email, pass)
-
+        await addUserDetail(name,email )
         setEmail("")
         setPass("")
         history.push('/dashboard');

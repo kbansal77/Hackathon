@@ -103,7 +103,7 @@ function CreateMail() {
   const classes = useStyles();
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, displayName } = useAuth();
   const history = useHistory()
   const [type, setType] = React.useState("");
   const [daySelected, setDaySelected] = React.useState("");
@@ -116,11 +116,13 @@ function CreateMail() {
   const [ccchip, setCcChip] = React.useState([]);
   const [bccvalue, setBccValue] = React.useState("");
   const [bccchip, setBccChip] = React.useState([]);
+  const [name, setName] = React.useState("")
   const toRef = React.useRef("");
   const ccRef = React.useRef("");
   const bccRef = React.useRef("");
   const subRef = React.useRef("");
   const bodyRef = React.useRef("");
+  console.log(displayName)
 
   function isValid(email) {
     let error = null;
@@ -307,7 +309,6 @@ function CreateMail() {
       alert("Subject and body is required")
     } else {
 
-
       const maildata = {
         "to": tochip,
         "cc": ccchip,
@@ -319,8 +320,7 @@ function CreateMail() {
         "time": timeSelected,
         "month": monthSelected,
         "type": type,
-        "sender": currentUser.email,
-        "displayName": currentUser.displayName
+        "sender": currentUser.email
       }
       console.log(maildata)
       fetch('https://dec8cb42e1f7.ngrok.io/mails', {
