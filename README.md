@@ -1,4 +1,4 @@
-#Mailman
+# Mailman
 ###  _A mail scheduling service_
 ### Description
 Mailman is a website aimed at making the tedious task of scheduling bulk emails as easy as clicking a few buttons. The website offers login and signup functionality with either an email and password or using a Google account. Users can compose emails and send them to other valid email addresses along with CC and BCC features, while also selecting a recurring schedule for the mails to be sent. The scheduling feature allows users to choose from every 30 seconds, weekly, monthly or even a yearly period to send the mails. The dashboard offered on the site allows users to view all their composed mails, a history of sent mails and also allows them to edit or delete any composed mails
