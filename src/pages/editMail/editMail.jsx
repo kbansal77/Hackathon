@@ -705,8 +705,10 @@ function EditMail(props) {
         overlayClassName="myoverlay"
       >
         <Container style={{ textAlign: "center" }}>
-          <Grid container>
-            <Grid item xs={6}>
+          <Grid container style={{
+                padding:"0.5rem"
+              }}>
+            <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
               Send Mail Every
             </Grid>
             <Grid item xs={6}>
@@ -726,8 +728,8 @@ function EditMail(props) {
           </Grid>
           {type === "Weekly" ? (
             <div>
-              <Grid container>
-                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container >
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   <span>Select A Day</span>
                 </Grid>
               </Grid>
@@ -751,8 +753,8 @@ function EditMail(props) {
                   </Grid>
                 ))}
               </Grid>
-              <Grid container>
-                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container >
+                <Grid item xs={12} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   <span>Select Time</span>
                 </Grid>
               </Grid>
@@ -780,11 +782,13 @@ function EditMail(props) {
           )}
           {type === "Monthly" ? (
             <div>
-              <Grid container className="textdiv">
-                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container style={{
+                padding:"1.5rem"
+              }} className="textdiv">
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   <span>Select A Date</span>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -800,12 +804,14 @@ function EditMail(props) {
                   </Select>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container style={{
+                padding:"1.5rem"
+              }}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   <span>Select Time</span>
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <TextField
                     id="time"
                     label=""
@@ -828,11 +834,13 @@ function EditMail(props) {
           )}
           {type === "Yearly" ? (
             <div>
-              <Grid container>
-                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container style={{
+                padding:"1.5rem"
+              }}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   <span>Select A Date</span>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -848,11 +856,11 @@ function EditMail(props) {
                   </Select>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={4}style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container >
+                <Grid item xs={6}style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   Select A Month
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -868,12 +876,14 @@ function EditMail(props) {
                   </Select>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={4} style={{color:"#3ebdf1", fontSize:"1.4em"}}>
+              <Grid container style={{
+                padding:"1.5rem"
+              }}>
+                <Grid item xs={6} style={{color:"#3ebdf1", fontSize:"1.4rem"}}>
                   <span>Select Time</span>
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <TextField
                     id="time"
                     label=""
