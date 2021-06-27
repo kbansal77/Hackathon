@@ -10,7 +10,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "react-modal";
 import Chip from "@material-ui/core/Chip";
-import TagFacesIcon from "@material-ui/icons/TagFaces";
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -173,7 +172,7 @@ function CreateMail() {
   };
 
   const handleToKeyDown = (event) => {
-    if (["Enter", "Tab", ","].includes(event.key)) {
+    if (["Enter", "Tab", ","," "].includes(event.key)) {
       event.preventDefault();
 
       var value = tovalue.trim();
@@ -199,7 +198,7 @@ function CreateMail() {
   };
 
   const handleCcKeyDown = (event) => {
-    if (["Enter", "Tab", ","].includes(event.key)) {
+    if (["Enter", " ", ","].includes(event.key)) {
       event.preventDefault();
 
       var value = ccvalue.trim();
@@ -303,9 +302,9 @@ function CreateMail() {
   
   const addMail=()=>{
     const maildata={
-    "to": toRef.current.value.split(','),
-    "cc": ccRef.current.value.split(','),
-    "bcc": bccRef.current.value.split(','),
+    "to": tochip,
+    "cc": ccchip,
+    "bcc": bccchip,
     "subject": subRef.current.value,
     "body": bodyRef.current.value,
     "day": daySelected,
@@ -316,7 +315,7 @@ function CreateMail() {
     "sender": currentUser.email
   }
   console.log(maildata)
-  fetch('https://6a9d0e005d61.ngrok.io/mails', {
+  fetch('https://dec8cb42e1f7.ngrok.io/mails', {
     method: 'POST', // or 'PUT'
     body: JSON.stringify(maildata),
     headers: {
@@ -337,6 +336,12 @@ function CreateMail() {
       setTimeSelected("")
       setMonthSelected("")
       setType("")
+      setToValue("")
+      setCcValue("")
+      setBccValue("")
+      setToChip([])
+      setCcChip([])
+      setBccChip([])
       history.push("/dashboard")
 
 
@@ -384,7 +389,7 @@ function CreateMail() {
                     <Input
                       value={tovalue}
                       inputRef={toRef}
-                      placeholder="To"
+                      placeholder="Press Enter, Spacebar or , after typing mail" 
                       onKeyDown={handleToKeyDown}
                       onChange={handleToChange}
                       onPaste={handleToPaste}
@@ -423,7 +428,7 @@ function CreateMail() {
                     <Input
                       value={ccvalue}
                       inputRef={ccRef}
-                      placeholder="CC"
+                      placeholder="Press Enter, Spacebar or , after typing mail"
                       onKeyDown={handleCcKeyDown}
                       onChange={handleCcChange}
                       onPaste={handleCcPaste}
@@ -461,7 +466,7 @@ function CreateMail() {
                     <Input
                       value={bccvalue}
                       inputRef={bccRef}
-                      placeholder="BCC"
+                      placeholder="Press Enter, Spacebar or , after typing mail"
                       onKeyDown={handleBccKeyDown}
                       onChange={handleBccChange}
                       onPaste={handleBccPaste}

@@ -103,7 +103,7 @@ function Dashboard() {
 
 
   useEffect(() => {
-    fetch('https://6a9d0e005d61.ngrok.io/mails', {
+    fetch('https://dec8cb42e1f7.ngrok.io/mails', {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ function Dashboard() {
   }, [])
 
  const reload =()=>{
-  fetch('https://6a9d0e005d61.ngrok.io/mails', {
+  fetch('https://dec8cb42e1f7.ngrok.io/mails', {
     method: 'GET', // or 'PUT'
     headers: {
       'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ function Dashboard() {
 
   const classes = useStyles();
   const editMail = (id) => {
-    fetch(`https://6a9d0e005d61.ngrok.io/mails/${id}`, {
+    fetch(`https://dec8cb42e1f7.ngrok.io/mails/${id}`, {
       method: 'GET', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ function Dashboard() {
       .catch(err => { console.log(err) })
   }
 const delMail =(id) =>{
-  fetch(`https://6a9d0e005d61.ngrok.io/mails/${id}`, {
+  fetch(`https://dec8cb42e1f7.ngrok.io/mails/${id}`, {
       method: 'DELETE', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
