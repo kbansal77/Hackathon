@@ -32,7 +32,6 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://kbansal77.github.io/Mailman",
   "browserslist": {
     "production": [
       ">0.2%",
